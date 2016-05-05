@@ -1,0 +1,3 @@
+[submodule "modules/trace"]
+	path = modules/trace
+	url = git@github.com:qualab/trace.git
