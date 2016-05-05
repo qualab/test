@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="scope">
+      <UniqueIdentifier>{80b494c3-ff71-409c-a2b0-98d20dc87746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="export">
+      <UniqueIdentifier>{cda389da-f0a9-47b0-a19f-851766b0afa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="check">
+      <UniqueIdentifier>{8d4c9328-ad92-44f1-8186-524ef08aac64}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\test\scope">
+      <Filter>scope</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\test\export">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\test\check">
+      <Filter>check</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\sources\scope\scope.cpp">
+      <Filter>scope</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sources\scope\scope_data.cpp">
+      <Filter>scope</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\sources\scope\scope_data">
+      <Filter>scope</Filter>
+    </None>
+  </ItemGroup>
+</Project>

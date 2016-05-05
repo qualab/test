@@ -1,0 +1,32 @@
+﻿// Internal header with test::scope::data declaration
+
+#include <test/scope>
+#include <string>
+#include <deque>
+
+namespace test
+{
+    class scope::data
+    {
+    public:
+        data(scope& self, scope& owner, const char* name);
+
+        const char* get_name() const;
+        const char* get_path() const;
+
+        const scope& get_owner() const;
+        scope& get_owner();
+
+    private:
+        scope& m_self;
+        scope& m_owner;
+        std::string m_name;
+        std::string m_path;
+        std::deque<scope> m_inner;
+    };
+
+    const char* const global_name = "";
+    const char* const path_separator = "/";
+}
+
+// Unicode signature: Владимир Керимов

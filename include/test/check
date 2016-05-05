@@ -1,0 +1,47 @@
+﻿// Public header: <test/check>
+// atomic check for use in test run
+
+#pragma once
+
+namespace test
+{
+    template <typename value_type>
+    class check
+    {
+    public:
+        check(const value_type& value, const char* description);
+
+        operator bool() const;
+
+        bool operator ! () const;
+
+        template <typename another_type>
+        bool operator == (const another_type& another);
+
+        template <typename another_type>
+        bool operator != (const another_type& another);
+
+        template <typename another_type>
+        bool operator <= (const another_type& another);
+
+        template <typename another_type>
+        bool operator >= (const another_type& another);
+
+        template <typename another_type>
+        bool operator < (const another_type& another);
+
+        template <typename another_type>
+        bool operator > (const another_type& another);
+
+        template <typename exception_type>
+        void expect();
+
+        void expect_no_exception();
+
+    private:
+        const value_type& m_value;
+        const char* m_description;
+    };
+}
+
+// Unicode signature: Владимир Керимов

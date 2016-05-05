@@ -1,0 +1,20 @@
+﻿// Public header: <test/export>
+// export settings to use module functionality
+
+#pragma once
+
+// Public macro: TEST_PUBLIC
+// use for declaration of public classes and functions
+// to export/import switch for use from dinamic-link libraries
+// requires TRACE_BUILD macro on trace project build on Windows
+// requires TRACE_STATIC macro on build of static-link library
+
+#if !defined(_WINDOWS) || defined(TEST_STATIC)
+#   define TEST_PUBLIC
+#elif defined(TEST_BUILD)
+#   define TEST_PUBLIC __declspec(dllexport)
+#else
+#   define TEST_PUBLIC __declspec(dllimport)
+#endif
+
+// Unicode signature: Владимир Керимов

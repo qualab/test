@@ -1,0 +1,41 @@
+﻿// Public header: <test/scope>
+// recursive scope with test checks
+
+#pragma once
+
+#include <test/export>
+#include <memory>
+
+namespace test
+{
+    class TEST_PUBLIC scope
+    {
+    public:
+        scope(scope& owner, const char* name); // create as a part of owner scope
+        scope(const char* name); // create as a part of global scope
+        virtual ~scope();
+
+        virtual const char* get_name() const;
+        virtual const char* get_path() const;
+
+        virtual const scope& get_owner() const;
+        virtual scope& get_owner();
+
+        virtual void run();
+
+        static scope& global();
+
+    private:
+        // hidden data details:
+        // * std::string v/s unicode::text
+        // * container for inner scopes
+        class data;
+
+        // it is normal to share usually single instance of test scope
+        std::shared_ptr<data> m_data;
+
+        scope(); // create global scope
+    };
+}
+
+// Unicode signature: Владимир Керимов
