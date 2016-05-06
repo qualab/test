@@ -19,18 +19,35 @@ namespace test
         const scope& get_owner() const;
         scope& get_owner();
 
+        iterator begin();
+        iterator end();
+        iterator find(const char* name);
+
+        typedef std::map<std::string, scope> scope_container;
+
     private:
         scope& m_self;
         scope& m_owner;
         std::string m_name;
         std::string m_path;
         std::string m_full_name;
-        std::map<std::string, scope> m_inner;
+        scope_container m_inner;
     };
 
-    const char* const global_name = "";
-    const char* const global_path = "";
-    const char* const path_separator = "/";
+    class scope::iterator::data
+    {
+    public:
+        typedef scope::data::scope_container::iterator value_type;
+
+        data(const value_type& value);
+
+        void set_value(const value_type& value);
+        const value_type& get_value() const;
+              value_type& get_value();
+
+    private:
+        value_type m_value;
+    };
 }
 
 // Unicode signature: Владимир Керимов
