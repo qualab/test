@@ -4,6 +4,8 @@
 #pragma once
 
 #include <test/export>
+#include <functional>
+#include <iterator>
 #include <memory>
 
 namespace test
@@ -15,15 +17,34 @@ namespace test
         scope(const char* name); // create as a part of global scope
         virtual ~scope();
 
-        virtual const char* get_name() const;
-        virtual const char* get_path() const;
+        const char* get_name() const;
+        const char* get_path() const;
+        const char* get_full_name() const;
 
-        virtual const scope& get_owner() const;
-        virtual scope& get_owner();
+        const scope& get_owner() const;
+              scope& get_owner();
 
         virtual void run();
 
         static scope& global();
+
+        typedef std::function<void(scope&)> handler;
+        typedef std::function<void(const scope&)> const_handler;
+
+        void each(const handler& functor);
+        void each(const const_handler& functor) const;
+
+        class iterator;
+        class const_iterator;
+
+        const_iterator begin() const;
+              iterator begin();
+
+        const_iterator end() const;
+              iterator end();
+
+        const_iterator cbegin() const;
+        const_iterator cend() const;
 
     private:
         // hidden data details:
@@ -35,6 +56,71 @@ namespace test
         std::shared_ptr<data> m_data;
 
         scope(); // create global scope
+    };
+
+    class TEST_PUBLIC scope::iterator
+        : public std::iterator<std::random_access_iterator_tag, scope>
+    {
+    public:
+        iterator();
+        iterator(iterator&&);
+        iterator(const iterator& another);
+        ~iterator();
+
+        iterator& operator ++ ();
+        iterator& operator -- ();
+        iterator operator ++ (int);
+        iterator operator -- (int);
+
+        iterator operator + (size_t delta) const;
+        iterator operator - (size_t delta) const;
+
+        size_t operator - (const iterator& another) const;
+
+        const scope& operator * () const;
+              scope& operator * ();
+
+        const scope& operator [] (int offset) const;
+              scope& operator [] (int offset);
+
+        const scope* operator -> () const;
+              scope* operator -> ();
+
+    private:
+        class data;
+        data* m_data;
+        static const size_t max_data_size = 16;
+        char m_buffer[max_data_size];
+    };
+
+    class TEST_PUBLIC scope::const_iterator
+        : public std::iterator<std::random_access_iterator_tag, const scope>
+    {
+    public:
+        const_iterator();
+        const_iterator(const_iterator&&);
+        const_iterator(const const_iterator& another);
+        ~const_iterator();
+
+        const_iterator& operator ++ ();
+        const_iterator& operator -- ();
+        const_iterator operator ++ (int);
+        const_iterator operator -- (int);
+
+        const_iterator operator + (size_t delta) const;
+        const_iterator operator - (size_t delta) const;
+
+        size_t operator - (const const_iterator& another) const;
+
+        const scope& operator * () const;
+        const scope& operator [] (int offset) const;
+        const scope* operator -> () const;
+
+    private:
+        class data;
+        data* m_data;
+        static const size_t max_data_size = 16;
+        char m_buffer[max_data_size];
     };
 }
 

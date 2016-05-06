@@ -2,17 +2,19 @@
 
 #include <test/scope>
 #include <string>
-#include <deque>
+#include <map>
 
 namespace test
 {
     class scope::data
     {
     public:
+        data(scope& self); // global scope only!
         data(scope& self, scope& owner, const char* name);
 
         const char* get_name() const;
         const char* get_path() const;
+        const char* get_full_name() const;
 
         const scope& get_owner() const;
         scope& get_owner();
@@ -22,10 +24,12 @@ namespace test
         scope& m_owner;
         std::string m_name;
         std::string m_path;
-        std::deque<scope> m_inner;
+        std::string m_full_name;
+        std::map<std::string, scope> m_inner;
     };
 
     const char* const global_name = "";
+    const char* const global_path = "";
     const char* const path_separator = "/";
 }
 
